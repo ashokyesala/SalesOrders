@@ -1,0 +1,106 @@
+<mvc:View xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" controllerName="com.so.SalesOrders.controller.Detail">
+	<semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+		<semantic:titleHeading>
+			<Title text="Customer: {CustomerName}" level="H2"/>
+		</semantic:titleHeading>
+		<semantic:headerContent>
+			<ObjectAttribute title="{i18n>CustomerID}" text="{CustomerID}"/>
+			<ObjectAttribute title="{i18n>priceTitle}"/>
+			<ObjectNumber id="objectHeaderNumber" number="{ path: 'GrossAmount', formatter: '.formatter.currencyValue' }" unit="{CurrencyCode}"/>
+		</semantic:headerContent>
+		<semantic:content>
+			<IconTabBar id="bar0">
+				<items>
+					<IconTabFilter text="Items" count="{detailView>/itemCount}" showAll="true" id="filter0">
+						<content>
+							<Table id="lineItemsList" width="auto" items="{ToLineItems}" updateFinished=".onListUpdateFinished" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}">
+								<headerToolbar>
+									<Toolbar>
+										<Title id="lineItemsTitle" text="{detailView>/lineItemListTitle}" titleStyle="H3" level="H3"/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column>
+										<Text text="{i18n>detailLineItemTableIDColumn}"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+										<Text text="{i18n>detailLineItemTableUnitNumberColumn}"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem  press="onPress" type="Navigation" >
+										<cells>
+											<ObjectIdentifier title="{ItemPosition}" text="{ProductID}"/>
+											<ObjectNumber number="{ path: 'GrossAmount', formatter: '.formatter.currencyValue' }" unit="{CurrencyCode}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://message-information" id="filter1">
+						<content>
+							<f:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" title="Sales Order Details" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="3" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+								<f:content>
+									<Label text="Note"/>
+									<Input id="name" value="{Note}" width="auto" fieldWidth=""/>
+								</f:content>
+							<f:customData>
+							    <core:CustomData key="w5g.dt.editable" value="false" id="data17"/>
+							</f:customData>
+							</f:SimpleForm>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://simple-payment" id="filter0_1589978560810" iconColor="Positive"/></items>
+			<content>
+			    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" id="form0">
+			        <f:content>
+			            <Label id="label2" text="Gross Amount"/>
+			            <Input width="100%" id="input2" value="{GrossAmount} {CurrencyCode}"/>
+			            <Label id="label3" text="Net Amount"/>
+			            <Input width="100%" id="input3" value="{NetAmount} {CurrencyCode}"/>
+			            <Label text="Tax Amount" width="100%" id="label4"/>
+			            <Input xmlns="sap.m" value="{TaxAmount} {CurrencyCode}" id="input4"/></f:content>
+			    </f:SimpleForm>
+			</content>
+			</IconTabBar>
+		</semantic:content>
+		<!--Semantic ShareMenu Buttons-->
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onSendEmailPress"/>
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press=".onShareInJamPress"/>
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton id="shareTile" title="{detailView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+		<semantic:closeAction>
+			<semantic:CloseAction id="closeColumn" press=".onCloseDetailPress"/>
+		</semantic:closeAction>
+		<semantic:fullScreenAction>
+			<semantic:FullScreenAction id="enterFullScreen" visible="{= !${device>/system/phone} &amp;&amp; !${appView>/actionButtonsInfo/midColumn/fullScreen}}" press=".toggleFullScreen"/>
+		</semantic:fullScreenAction>
+		<semantic:exitFullScreenAction>
+			<semantic:ExitFullScreenAction id="exitFullScreen" visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/midColumn/fullScreen}}" press=".toggleFullScreen"/>
+		</semantic:exitFullScreenAction>
+	<semantic:positiveAction>
+	    <semantic:PositiveAction id="action0" text="Positive"/>
+	</semantic:positiveAction>
+	<semantic:negativeAction>
+	    <semantic:NegativeAction id="action1" text="Negative"/>
+	</semantic:negativeAction>
+	<semantic:footerMainAction>
+	    <semantic:FooterMainAction text="Main" id="action2"/>
+	</semantic:footerMainAction>
+	<semantic:footerCustomActions>
+	    <Button xmlns="sap.m" text="Cancel" id="button0"/>
+	</semantic:footerCustomActions>
+	<semantic:messagesIndicator>
+	    <semantic:MessagesIndicator tooltip="Messages" id="indicator0"/>
+	</semantic:messagesIndicator>
+	<semantic:draftIndicator>
+	    <DraftIndicator xmlns="sap.m" state="Saved" id="indicator1"/>
+	</semantic:draftIndicator>
+	</semantic:SemanticPage>
+</mvc:View>
